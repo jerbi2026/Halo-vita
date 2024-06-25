@@ -1,0 +1,228 @@
+<body>
+  <nav class="navbar navbar-expand-lg  ">
+    <div class="container-fluid">
+      <a class="navbar-brand"  routerLink="/docteur"><img src="assets/logo.jpg" alt="" height="60" width="60"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse " id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active text-white" aria-current="page" routerLink="/docteur">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" routerLink="/reclamations" >Reclamations</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white"  (click)="Signout()">Log out</a>
+          </li>
+          
+        </ul>
+        
+        
+      </div>
+     
+      
+    </div>
+</nav>
+
+<section class="center_section">
+    <div class="card" style="width: 18rem;">
+        <img src="assets/agriculteur1.jpeg" class="card-img-top" alt="agriculteur">
+        <div class="card-body">
+            <h3 class="text-color">{{agriculteur[0].nom}} {{agriculteur[0].prenom}}</h3>
+          <p class="card-text">Region : {{agriculteur[0].region}}</p>
+          <p class="card-text">Superficie : {{agriculteur[0].superficie}}m²</p>
+          <p class="card-text">Nombre de zones : {{agriculteur[0].nb_zone}}</p>
+        </div>
+      </div>
+
+</section>
+
+<section class="center_section" *ngIf="valeurs.length>0">
+    <button class="continue-application" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+        <div>
+            <div class="pencil"></div>
+            <div class="folder">
+                <div class="top">
+                    <svg viewBox="0 0 24 27">
+                        <path d="M1,0 L23,0 C23.5522847,-1.01453063e-16 24,0.44771525 24,1 L24,8.17157288 C24,8.70200585 23.7892863,9.21071368 23.4142136,9.58578644 L20.5857864,12.4142136 C20.2107137,12.7892863 20,13.2979941 20,13.8284271 L20,26 C20,26.5522847 19.5522847,27 19,27 L1,27 C0.44771525,27 6.76353751e-17,26.5522847 0,26 L0,1 C-6.76353751e-17,0.44771525 0.44771525,1.01453063e-16 1,0 Z"></path>
+                    </svg>
+                </div>
+                <div class="paper"></div>
+            </div>
+        </div>
+       Analyser avec AI
+    </button>
+   
+     
+
+</section>
+
+<section class="center_section"  *ngIf="valeurs.length==0">
+    <h1 class="text-success">No values to display</h1>
+</section>
+
+
+ 
+<section class="center_section" *ngIf="valeurs.length>0">
+    <div class="table-wrapper" >
+        <h3 class="text-success">Historiques des Valeurs</h3>
+        <table class="fl-table">
+            <thead>
+            <tr>
+                <th>Zone</th>
+                <th>Valeur</th>
+                <th>Temps</th>
+                <th>Map</th>
+               
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of valeurs">
+                <td>{{item.zone}}</td>
+                <td>{{item.valeur}} ph</td>
+                <td>{{formatDate(item.time) }}</td>
+                <td><button class="btn btn-success" (click)="openPopup(item.latitude, item.longitude)">Voir map</button></td>
+                
+            </tr>
+            
+            <tbody>
+        </table>
+    </div>
+
+
+</section>
+
+<section class="center_section">
+    <div class="table-wrapper" *ngIf="!isLoading">
+      <div *ngFor="let date of getDates()">
+        <h3 class="text-success">{{ date }}</h3>
+        <table class="fl-table">
+          <thead>
+            <tr>
+              <th>Zone</th>
+              <th>Valeur</th>
+              <th>Temps</th>
+              <th>Map</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of valeursGroupedByDate[date]">
+              <td>{{ item.zone }}</td>
+              <td>{{ item.valeur }} ph</td>
+              <td>{{ formatDate(item.time) }}</td>
+              <td><button class="btn btn-success" (click)="openPopup(item.latitude, item.longitude)">Voir map</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+</section>
+
+<section>
+    <div class="table-wrapper" *ngIf="!isLoading">
+        <div *ngFor="let zone of getZones()">
+            <h3 class="text-success">{{ zone }}</h3>
+            <table class="fl-table">
+              <thead>
+                <tr>
+                  <th>Valeur</th>
+                  <th>Temps</th>
+                  <th>Map</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of valeursGroupedByZone[zone]">
+                  <td>{{ item.valeur }} ph</td>
+                  <td>{{ formatDate(item.time) }}</td>
+                  <td><button class="btn btn-success" (click)="openPopup(item.latitude, item.longitude)">Voir map</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+    </div>
+</section>
+
+
+
+
+
+
+<footer>
+    <p>All rights are reserved 2024</p>
+   
+</footer>
+
+  <div class="dialog-box bg-white" id="dialog">
+    <h2>Information 💁🏻</h2>
+    <p>{{message}}</p>
+    <button aria-label="close" class="x" (click)="close_dialog()">❌</button>
+  </div>
+  
+
+  
+
+<div class="dialog-box spinner" *ngIf="isLoading">
+    <div class="spinner-grow text-success" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <div class="spinner-grow text-secondary-color" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <div class="spinner-grow text-dark-color" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+  
+
+
+  
+<div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExample">
+  
+    <div class="offcanvas-body">
+      <div class="offcanvas-header">
+          <h5 class="offcanvas-title text-secondary-color" id="offcanvasExampleLabel">Halo Vita BOT</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <button class="button" (click)="openModal()">
+                <svg
+                  height="24"
+                  width="24"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M0 0h24v24H0z" fill="none"></path>
+                  <path
+                    d="M5 13c0-5.088 2.903-9.436 7-11.182C16.097 3.564 19 7.912 19 13c0 .823-.076 1.626-.22 2.403l1.94 1.832a.5.5 0 0 1 .095.603l-2.495 4.575a.5.5 0 0 1-.793.114l-2.234-2.234a1 1 0 0 0-.707-.293H9.414a1 1 0 0 0-.707.293l-2.234 2.234a.5.5 0 0 1-.793-.114l-2.495-4.575a.5.5 0 0 1 .095-.603l1.94-1.832C5.077 14.626 5 13.823 5 13zm1.476 6.696l.817-.817A3 3 0 0 1 9.414 18h5.172a3 3 0 0 1 2.121.879l.817.817.982-1.8-1.1-1.04a2 2 0 0 1-.593-1.82c.124-.664.187-1.345.187-2.036 0-3.87-1.995-7.3-5-8.96C8.995 5.7 7 9.13 7 13c0 .691.063 1.372.187 2.037a2 2 0 0 1-.593 1.82l-1.1 1.039.982 1.8zM12 13a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"
+                    fill="currentColor"
+                  ></path>
+                </svg>
+                <span>Generate</span>
+              </button>
+              
+            
+        
+        
+        </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Analyse AI</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          {{analyse}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

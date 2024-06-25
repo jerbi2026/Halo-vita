@@ -1,0 +1,463 @@
+<body>
+  <nav class="navbar navbar-expand-lg  ">
+    <div class="container-fluid">
+      <a class="navbar-brand" routerLink="/agriculteur" ><img src="assets/logo.jpg" alt="" height="60" width="60"></a>
+      <p style="text-align: center;" *ngIf="!isLoading">مزارع : {{agriculteur.nom}} {{agriculteur.prenom}}</p>
+      <p style="text-align: center;" *ngIf="!isLoading">منطقة : {{agriculteur.region}} <br> عدد المناطق : {{agriculteur.nb_zone}} <br> (m²)مساحة : {{agriculteur.superficie}}</p>
+      
+    </div>
+</nav>
+
+
+<section class="center_section">
+  
+    <button class="continue-application" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+        <div>
+            <div class="pencil"></div>
+            <div class="folder">
+                <div class="top">
+                    <svg viewBox="0 0 24 27">
+                        <path d="M1,0 L23,0 C23.5522847,-1.01453063e-16 24,0.44771525 24,1 L24,8.17157288 C24,8.70200585 23.7892863,9.21071368 23.4142136,9.58578644 L20.5857864,12.4142136 C20.2107137,12.7892863 20,13.2979941 20,13.8284271 L20,26 C20,26.5522847 19.5522847,27 19,27 L1,27 C0.44771525,27 6.76353751e-17,26.5522847 0,26 L0,1 C-6.76353751e-17,0.44771525 0.44771525,1.01453063e-16 1,0 Z"></path>
+                    </svg>
+                </div>
+                <div class="paper"></div>
+            </div>
+        </div>
+        أضف القياسات
+    </button>
+    <button class="continue-application" data-bs-toggle="offcanvas" data-bs-target="#Reclamation" aria-controls="Reclamation">
+        <div>
+            <div class="pencil"></div>
+            <div class="folder">
+                <div class="top">
+                    <svg viewBox="0 0 24 27">
+                        <path d="M1,0 L23,0 C23.5522847,-1.01453063e-16 24,0.44771525 24,1 L24,8.17157288 C24,8.70200585 23.7892863,9.21071368 23.4142136,9.58578644 L20.5857864,12.4142136 C20.2107137,12.7892863 20,13.2979941 20,13.8284271 L20,26 C20,26.5522847 19.5522847,27 19,27 L1,27 C0.44771525,27 6.76353751e-17,26.5522847 0,26 L0,1 C-6.76353751e-17,0.44771525 0.44771525,1.01453063e-16 1,0 Z"></path>
+                    </svg>
+                </div>
+                <div class="paper"></div>
+            </div>
+        </div>
+        مطالبة
+    </button>
+    <button class="continue-application" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+        <div>
+            <div class="pencil"></div>
+            <div class="folder">
+                <div class="top">
+                    <svg viewBox="0 0 24 27">
+                        <path d="M1,0 L23,0 C23.5522847,-1.01453063e-16 24,0.44771525 24,1 L24,8.17157288 C24,8.70200585 23.7892863,9.21071368 23.4142136,9.58578644 L20.5857864,12.4142136 C20.2107137,12.7892863 20,13.2979941 20,13.8284271 L20,26 C20,26.5522847 19.5522847,27 19,27 L1,27 C0.44771525,27 6.76353751e-17,26.5522847 0,26 L0,1 C-6.76353751e-17,0.44771525 0.44771525,1.01453063e-16 1,0 Z"></path>
+                    </svg>
+                </div>
+                <div class="paper"></div>
+            </div>
+        </div>
+      Halo Vita Bot
+    </button>
+    <button class="continue-application" data-bs-toggle="offcanvas" data-bs-target="#logoutcanvas" aria-controls="offcanvasBottom">
+        <div>
+            <div class="pencil"></div>
+            <div class="folder">
+                <div class="top">
+                    <svg viewBox="0 0 24 27">
+                        <path d="M1,0 L23,0 C23.5522847,-1.01453063e-16 24,0.44771525 24,1 L24,8.17157288 C24,8.70200585 23.7892863,9.21071368 23.4142136,9.58578644 L20.5857864,12.4142136 C20.2107137,12.7892863 20,13.2979941 20,13.8284271 L20,26 C20,26.5522847 19.5522847,27 19,27 L1,27 C0.44771525,27 6.76353751e-17,26.5522847 0,26 L0,1 C-6.76353751e-17,0.44771525 0.44771525,1.01453063e-16 1,0 Z"></path>
+                    </svg>
+                </div>
+                <div class="paper"></div>
+            </div>
+        </div>
+        تسجيل خروج
+    </button>
+   
+     
+
+</section>
+
+
+
+
+<section class="center_section"  *ngIf="valeurs.length==0 && !isLoading">
+    <h1 class="text-color">لا توجد قيم لعرضها</h1>
+</section>
+
+
+ 
+<section class="center_section" *ngIf="valeurs.length>0 && !isLoading">
+    <div class="table-wrapper" >
+        <h3 class="text-color">القيم التاريخية</h3>
+        <table class="fl-table">
+            <thead>
+            <tr>
+                <th>منطقة</th>
+                <th>قيمة</th>
+                <th>وقت</th>
+                <th>خريطة</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of valeurs |  paginate:{itemsPerPage:5 , currentPage:p};">
+                <td>{{item.zone}}</td>
+                <td>{{item.valeur}} ph</td>
+                <td>{{formatDate(item.time) }}</td>
+                <td><button class="btn btn-warning" (click)="openPopup(item.latitude, item.longitude)">خريطة</button></td>
+                
+            </tr>
+            
+            <tbody>
+        </table>
+        <pagination-controls (pageChange)="p = $event" class="bg-warning"></pagination-controls>
+    </div>
+
+
+</section>
+
+<section class="center_section">
+    <div class="table-wrapper" *ngIf="!isLoading">
+      <div *ngFor="let date of getDates()">
+        <h3 class="text-color">{{ date }}</h3>
+        <table class="fl-table">
+          <thead>
+            <tr>
+              <th>منطقة</th>
+                <th>قيمة</th>
+                <th>وقت</th>
+                <th>خريطة</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of valeursGroupedByDate[date]">
+              <td>{{ item.zone }}</td>
+              <td>{{ item.valeur }} ph</td>
+              <td>{{ formatDate(item.time) }}</td>
+              <td><button class="btn btn-warning" (click)="openPopup(item.latitude, item.longitude)">خريطة</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+</section>
+
+<section>
+    <div class="table-wrapper" *ngIf="!isLoading">
+        <div *ngFor="let zone of getZones()">
+            <h3 class="text-color">{{ zone }}</h3>
+            <table class="fl-table">
+              <thead>
+                <tr>
+                  <th>منطقة</th>
+                  <th>قيمة</th>
+                  <th>خريطة</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of valeursGroupedByZone[zone]">
+                  <td>{{ item.valeur }} ph</td>
+                  <td>{{ formatDate(item.time) }}</td>
+                  <td><button class="btn btn-warning" (click)="openPopup(item.latitude, item.longitude)">خريطة</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+    </div>
+</section>
+
+
+
+
+
+
+<footer>
+    <p>All rights are reserved 2024</p>
+   
+</footer>
+
+  <div class="dialog-box bg-white" id="dialog">
+    <h2>معلومة 💁🏻</h2>
+    <p>{{message}}</p>
+    <button aria-label="close" class="x" (click)="close_dialog()">❌</button>
+  </div>
+  
+
+  
+
+<div class="dialog-box spinner" *ngIf="isLoading">
+    <div class="spinner-grow text-warning-color" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <div class="spinner-grow text-secondary-color" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <div class="spinner-grow text-dark-color" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+  
+
+
+  
+<div class="offcanvas  offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExample">
+  
+    <div class="offcanvas-body">
+      <div class="offcanvas-header">
+          <h5 class="offcanvas-title text-secondary" id="offcanvasExampleLabel">Ajouter nouvelles mesures</h5>
+        
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <p>ملاحظة جيدة: يجب وضع المستشعر في مكانه قبل التقاط القياسات</p>
+            <label for="zone" class="label-control">
+              منطقة
+            </label>
+            <select name="zone" id="zone" class="form-control" [(ngModel)]="nv_valeur.zone" >
+                <option *ngFor="let zone of zones" [value]="'zone ' + zone">منطقة {{ zone }}</option>
+            </select>
+            <div>
+                <button class="button"  data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  <svg
+                    viewBox="0 0 16 16"
+                    class="bi bi-lightning-charge-fill"
+                    fill="currentColor"
+                    height="16"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"
+                    ></path></svg>
+                    قيس
+                </button>
+              </div>
+              
+            
+              
+            
+        
+        
+        </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">قياس القيمة</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          قيمة: {{ valeur }}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">يلغي</button>
+          <button type="button" class="btn btn-primary" (click)="confirmValue()">أكد</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  
+<div class="offcanvas  offcanvas-end" tabindex="-1" id="Reclamation" aria-labelledby="Reclamation">
+  
+    <div class="offcanvas-body">
+      <div class="offcanvas-header">
+          <h5 class="offcanvas-title text-secondary" id="offcanvasExampleLabel">الإبلاغ عن شكوى</h5>
+        
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+
+        <div class="offcanvas-body">
+            <form class="form">
+                <div class="input-container">
+                   <input type="text" class="form-control" placeholder="عنوان" name="titre" [(ngModel)]="nv_reclamation.titre" >
+                </div>
+                <div class="input-container">
+                    <textarea name="description" id="description" placeholder="محتوى" class="form-control" [(ngModel)]="nv_reclamation.description"></textarea>
+                </div>
+                <button class="Documents-btn" (click)="ajouter_reclamation()">
+                    <span class="folderContainer">
+                      <svg
+                        class="fileBack"
+                        width="146"
+                        height="113"
+                        viewBox="0 0 146 113"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M0 4C0 1.79086 1.79086 0 4 0H50.3802C51.8285 0 53.2056 0.627965 54.1553 1.72142L64.3303 13.4371C65.2799 14.5306 66.657 15.1585 68.1053 15.1585H141.509C143.718 15.1585 145.509 16.9494 145.509 19.1585V109C145.509 111.209 143.718 113 141.509 113H3.99999C1.79085 113 0 111.209 0 109V4Z"
+                          fill="url(#paint0_linear_117_4)"
+                        ></path>
+                        <defs>
+                          <linearGradient
+                            id="paint0_linear_117_4"
+                            x1="0"
+                            y1="0"
+                            x2="72.93"
+                            y2="95.4804"
+                            gradientUnits="userSpaceOnUse"
+                          >
+                            <stop stop-color="#8F88C2"></stop>
+                            <stop offset="1" stop-color="#5C52A2"></stop>
+                          </linearGradient>
+                        </defs>
+                      </svg>
+                      <svg
+                        class="filePage"
+                        width="88"
+                        height="99"
+                        viewBox="0 0 88 99"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect width="88" height="99" fill="url(#paint0_linear_117_6)"></rect>
+                        <defs>
+                          <linearGradient
+                            id="paint0_linear_117_6"
+                            x1="0"
+                            y1="0"
+                            x2="81"
+                            y2="160.5"
+                            gradientUnits="userSpaceOnUse"
+                          >
+                            <stop stop-color="white"></stop>
+                            <stop offset="1" stop-color="#686868"></stop>
+                          </linearGradient>
+                        </defs>
+                      </svg>
+                  
+                      <svg
+                        class="fileFront"
+                        width="160"
+                        height="79"
+                        viewBox="0 0 160 79"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M0.29306 12.2478C0.133905 9.38186 2.41499 6.97059 5.28537 6.97059H30.419H58.1902C59.5751 6.97059 60.9288 6.55982 62.0802 5.79025L68.977 1.18034C70.1283 0.410771 71.482 0 72.8669 0H77H155.462C157.87 0 159.733 2.1129 159.43 4.50232L150.443 75.5023C150.19 77.5013 148.489 79 146.474 79H7.78403C5.66106 79 3.9079 77.3415 3.79019 75.2218L0.29306 12.2478Z"
+                          fill="url(#paint0_linear_117_5)"
+                        ></path>
+                        <defs>
+                          <linearGradient
+                            id="paint0_linear_117_5"
+                            x1="38.7619"
+                            y1="8.71323"
+                            x2="66.9106"
+                            y2="82.8317"
+                            gradientUnits="userSpaceOnUse"
+                          >
+                            <stop stop-color="#C3BBFF"></stop>
+                            <stop offset="1" stop-color="#51469A"></stop>
+                          </linearGradient>
+                        </defs>
+                      </svg>
+                    </span>
+                    <p class="text">إضافة طلب </p>
+                  </button>
+                  
+               
+                
+                 
+              
+                 
+         
+               
+            </form>
+            
+              
+            
+              
+            
+        
+        
+        </div>
+    </div>
+  </div>
+
+
+
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasBottomLabel">Halo vita bot</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" (click)="stop()"></button>
+    </div>
+
+    <div class="offcanvas-body small">
+        <label for="langue" class="form-label">لغة : </label>
+        <select name="langue" id="langue" class="form-control" [(ngModel)]="language" (change)="stop()" >
+            <option value="fr-FR">Francais</option>
+        <option value="en-US">Anglais</option>
+        <option value="ar-SA">Arabe</option>
+        <option value="it-IT">Italien</option>
+        <option value="zh-CN">Chinois</option>
+        </select>
+        <div class="input-container">
+          <textarea name="prompt" id="prompt" class="form-control" [(ngModel)]="recognizedText" placeholder="votre demande" [disabled]="true"></textarea>
+          
+       </div>
+        <p>اضغط وتحدث </p>
+        <section class="center_section">
+            <button class="rec_button" (mousedown)="startListening()">تحدث</button>
+            
+        </section>
+        <section class="center_section">
+          <button class="button_stop" (click)="stop()">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 69 14"
+              class="svgIcon bin-top"
+            >
+              <g clip-path="url(#clip0_35_24)">
+                <path
+                  fill="black"
+                  d="M20.8232 2.62734L19.9948 4.21304C19.8224 4.54309 19.4808 4.75 19.1085 4.75H4.92857C2.20246 4.75 0 6.87266 0 9.5C0 12.1273 2.20246 14.25 4.92857 14.25H64.0714C66.7975 14.25 69 12.1273 69 9.5C69 6.87266 66.7975 4.75 64.0714 4.75H49.8915C49.5192 4.75 49.1776 4.54309 49.0052 4.21305L48.1768 2.62734C47.3451 1.00938 45.6355 0 43.7719 0H25.2281C23.3645 0 21.6549 1.00938 20.8232 2.62734ZM64.0023 20.0648C64.0397 19.4882 63.5822 19 63.0044 19H5.99556C5.4178 19 4.96025 19.4882 4.99766 20.0648L8.19375 69.3203C8.44018 73.0758 11.6746 76 15.5712 76H53.4288C57.3254 76 60.5598 73.0758 60.8062 69.3203L64.0023 20.0648Z"
+                ></path>
+              </g>
+              <defs>
+                <clipPath id="clip0_35_24">
+                  <rect fill="white" height="14" width="69"></rect>
+                </clipPath>
+              </defs>
+            </svg>
+          
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 69 57"
+              class="svgIcon bin-bottom"
+            >
+              <g clip-path="url(#clip0_35_22)">
+                <path
+                  fill="black"
+                  d="M20.8232 -16.3727L19.9948 -14.787C19.8224 -14.4569 19.4808 -14.25 19.1085 -14.25H4.92857C2.20246 -14.25 0 -12.1273 0 -9.5C0 -6.8727 2.20246 -4.75 4.92857 -4.75H64.0714C66.7975 -4.75 69 -6.8727 69 -9.5C69 -12.1273 66.7975 -14.25 64.0714 -14.25H49.8915C49.5192 -14.25 49.1776 -14.4569 49.0052 -14.787L48.1768 -16.3727C47.3451 -17.9906 45.6355 -19 43.7719 -19H25.2281C23.3645 -19 21.6549 -17.9906 20.8232 -16.3727ZM64.0023 1.0648C64.0397 0.4882 63.5822 0 63.0044 0H5.99556C5.4178 0 4.96025 0.4882 4.99766 1.0648L8.19375 50.3203C8.44018 54.0758 11.6746 57 15.5712 57H53.4288C57.3254 57 60.5598 54.0758 60.8062 50.3203L64.0023 1.0648Z"
+                ></path>
+              </g>
+              <defs>
+                <clipPath id="clip0_35_22">
+                  <rect fill="white" height="57" width="69"></rect>
+                </clipPath>
+              </defs>
+            </svg>
+          </button>
+          
+      </section>
+        
+    </div>
+  </div>
+
+  <div class="offcanvas offcanvas-bottom" tabindex="-1" id="logoutcanvas" aria-labelledby="offcanvasBottomLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasBottomLabel">هل ترغب في المغادرة؟</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body small">
+      <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="button" class="btn btn-danger" (click)="signout()">يغادر</button>
+        <button type="button" data-bs-dismiss="offcanvas" class="btn btn-warning">ابق على اتصال</button>
+      </div>
+    </div>
+  </div>
+</body>

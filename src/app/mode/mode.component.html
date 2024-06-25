@@ -1,0 +1,21 @@
+<body>
+    
+    <div class="form-container">
+        <p class="title"><img src="assets/logo.jpg" alt="" height="80" width="80"></p>
+        
+        <form class="form">
+            <label for="mode" class="form-label">دور</label>
+            <select name="mode" id="mode" class="input form-control" [(ngModel)]="role">
+                <option value="1">خبير</option>
+                <option value="2">مزارع</option>
+
+            </select>
+          
+         
+          
+          <button class="form-btn" (click)="mode()">ثبت</button>
+        </form>
+       
+       
+      </div>
+</body>

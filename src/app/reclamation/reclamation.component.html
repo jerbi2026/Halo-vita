@@ -1,0 +1,89 @@
+<body>
+    <nav class="navbar navbar-expand-lg  ">
+        <div class="container-fluid">
+          <a class="navbar-brand" routerLink="/docteur" ><img src="assets/logo.jpg" alt="" height="60" width="60"></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse " id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active text-white" aria-current="page" routerLink="/docteur">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white"  routerLink="/reclamations">Reclamations</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white" (click)="Signout()" >Log out</a>
+              </li>
+              
+            </ul>
+            
+            
+          </div>
+         
+          
+        </div>
+    </nav>
+    
+    <section class="center_section"  *ngIf="reclamations.length>0 && !isLoading">
+        <h1 class="text-success">Réclamations</h1>
+    </section>
+    
+    <section class="center_section"  *ngIf="reclamations.length==0 && !isLoading">
+        <h1 class="text-danger">No values to display</h1>
+    </section>
+    
+    
+     
+    <section class="center_section" *ngIf="reclamations.length>0 && !isLoading">
+        <div class="table-wrapper" >
+           
+            <table class="fl-table">
+                <thead>
+                <tr>
+                    <th>Agriculteur</th>
+                    <th>Titre</th>
+                    <th>Description</th>
+                    <th>temps</th>
+                   
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of reclamations |  paginate:{itemsPerPage:5 , currentPage:p};">
+                    <td>{{item.agriculteur}}</td>
+                    <td>{{item.titre}}</td>
+                    <td>{{item.description}} ph</td>
+                    <td>{{formatDate(item.time) }}</td>
+                    
+                    
+                </tr>
+                
+                <tbody>
+            </table>
+            <pagination-controls (pageChange)="p = $event" class="bg-warning"></pagination-controls>
+        </div>
+    
+    
+    </section>
+    
+    
+    <div class="dialog-box bg-white" id="dialog">
+        <h2>Information 💁🏻</h2>
+        <p>{{message}}</p>
+        <button aria-label="close" class="x" (click)="close_dialog()">❌</button>
+      </div>
+    
+    
+      <div class="dialog-box spinner" *ngIf="isLoading">
+        <div class="spinner-grow text-success" style="width: 3rem; height: 3rem;" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <div class="spinner-grow text-secondary" style="width: 3rem; height: 3rem;" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <div class="spinner-grow text-dark" style="width: 3rem; height: 3rem;" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+</body>

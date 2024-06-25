@@ -1,0 +1,39 @@
+<body>
+  <body>
+    
+    <div class="form-container">
+        <p class="title"><img src="assets/logo.jpg" alt=""  height="80" width="80"></p>
+        <form class="form" >
+          <input type="email" class="input form-control" placeholder="Email" [(ngModel)]="email" name="email">
+          <input type="password" class="input form-control" placeholder="Password" [(ngModel)]="password" name="password">
+          <input type="password" class="input form-control" placeholder="Repeat Password" [(ngModel)]="rep_password" name="password2">
+          
+          <button class="form-btn" (click)="signUp()">Sign up</button>
+        </form>
+        <p class="sign-up-label">
+           have an account?<a routerLink="/login"><span class="sign-up-link">Sign in</span></a>
+        </p>
+        
+      </div>
+</body>
+
+<div class="dialog-box bg-white" id="dialog">
+  <h2>Info 💁🏻</h2>
+  <p>{{message}}</p>
+  <button aria-label="close" class="x" (click)="close_dialog()">❌</button>
+</div>
+
+
+
+<div class="dialog-box spinner" *ngIf="isLoading">
+  <div class="spinner-grow text-success" style="width: 3rem; height: 3rem;" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+  <div class="spinner-grow text-secondary-color" style="width: 3rem; height: 3rem;" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+  <div class="spinner-grow text-dark-color" style="width: 3rem; height: 3rem;" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+</body>

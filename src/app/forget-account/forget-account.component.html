@@ -1,0 +1,37 @@
+<body>
+    
+    <div class="form-container">
+        <p class="title">تقديم شكوى</p>
+        
+        <form class="form" >
+            <input type="text" class="input form-control" placeholder="رقم" name="numero" [(ngModel)]="numero" >
+          <input type="text" class="input form-control" placeholder="عنوان" name="titre" [(ngModel)]="nv_reclamation.titre" >
+          <textarea name="description" id="description" class="form-control" placeholder="محتوى" [(ngModel)]="nv_reclamation.description"></textarea>
+         
+          <button class="form-btn"  (click)="send_reclamation()">يرسل</button>
+          <button class="form-btn" routerLink="/login_agriculteur" >عُد</button>
+        </form>
+       
+       
+      </div>
+</body>
+
+<div class="dialog-box bg-white" id="dialog">
+  <h2>معلومة 💁🏻</h2>
+  <p>{{message}}</p>
+  <button aria-label="close" class="x" (click)="close_dialog()">❌</button>
+</div>
+
+
+
+<div class="dialog-box spinner" *ngIf="isLoading">
+    <div class="spinner-grow text-warning-color" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <div class="spinner-grow text-secondary-color" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <div class="spinner-grow text-dark-color" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>

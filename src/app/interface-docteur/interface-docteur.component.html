@@ -1,0 +1,253 @@
+<body>
+  <nav class="navbar navbar-expand-lg  ">
+    <div class="container-fluid">
+      <a class="navbar-brand" routerLink="/docteur" ><img src="assets/logo.jpg" alt="" height="60" width="60"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse " id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active text-white" aria-current="page" routerLink="/docteur">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white"  routerLink="/reclamations">Reclamations</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white"  (click)="Signout()">Log out</a>
+          </li>
+          
+        </ul>
+        
+        
+      </div>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Chercher Agriculteur" aria-label="Search" name="search" [(ngModel)]="numero" (change)="search_agriculteur()">
+        <button class="btn btn-outline-light" type="submit" (click)="search_agriculteur()">Chercher</button>
+        
+      </form>
+      
+    </div>
+</nav>
+
+<section class="center_section">
+  
+    <button class="continue-application" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+        <div>
+            <div class="pencil"></div>
+            <div class="folder">
+                <div class="top">
+                    <svg viewBox="0 0 24 27">
+                        <path d="M1,0 L23,0 C23.5522847,-1.01453063e-16 24,0.44771525 24,1 L24,8.17157288 C24,8.70200585 23.7892863,9.21071368 23.4142136,9.58578644 L20.5857864,12.4142136 C20.2107137,12.7892863 20,13.2979941 20,13.8284271 L20,26 C20,26.5522847 19.5522847,27 19,27 L1,27 C0.44771525,27 6.76353751e-17,26.5522847 0,26 L0,1 C-6.76353751e-17,0.44771525 0.44771525,1.01453063e-16 1,0 Z"></path>
+                    </svg>
+                </div>
+                <div class="paper"></div>
+            </div>
+        </div>
+       Ajouter agriculteur
+    </button>
+   
+     
+
+</section>
+
+
+<section class="center_section">
+    <div class="table-wrapper">
+        <table class="fl-table">
+            <thead>
+            <tr>
+                <th>Agriculteur</th>
+                <th>Region</th>
+                <th>Superficie (en m²)</th>
+                <th>Nombre de zones</th>
+                <th>Numero</th>
+                <th>Code</th>
+               <th></th>
+               <th></th>
+               <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of agriculteurs">
+                <td>{{item.nom}} {{item.prenom}}</td>
+                <td>{{item.region}}</td>
+                <td>{{item.superficie}}m²</td>
+                <td>{{item.nb_zone}}</td>
+                <td>{{item.numero}}</td>
+                <td>{{item.code}}</td>
+                <td><button class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" (click)="preparer_agriculteur(item)"><i class="fa-solid fa-pen-to-square"></i></button></td>
+                <td><button class="btn btn-danger" (click)="delete_agriculteur(item.id)"><i class="fa-solid fa-trash"></i></button></td>
+                <td><button class="btn btn-success" (click)="view_agriculteur(item)"><i class="fa-solid fa-circle-info"></i></button></td>
+            </tr>
+            
+            <tbody>
+        </table>
+    </div>
+
+
+</section>
+
+
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+  
+  <div class="offcanvas-body">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Agriculteur</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+          
+      <form class="form">
+          <div class="input-container">
+             <input type="text" class="form-control" placeholder="Nom" name="nom" [(ngModel)]="agriculteur_add.nom">
+          </div>
+          <div class="input-container">
+              <input type="text" class="form-control" placeholder="Prenom"  name="prenom" [(ngModel)]="agriculteur_add.prenom">
+          </div>
+         
+          <div class="input-container">
+              <input type="text" class="form-control" placeholder="Region"  name="region" [(ngModel)]="agriculteur_add.region">
+          </div>
+          <div class="input-container">
+              <label for="superficie" class="form-label">Superficie</label>
+              <input type="text" class="form-control" placeholder="Superficie"  name="superficie" [(ngModel)]="agriculteur_add.superficie">
+          </div>
+          
+          <div class="input-container">
+              <input type="text" class="form-control" placeholder="Numero"  name="numero" [(ngModel)]="agriculteur_add.numero">
+          </div>
+          <div class="input-container">
+              <input type="text" class="form-control" placeholder="Code"  name="code" [(ngModel)]="agriculteur_add.code">
+          </div>
+           
+        
+            <button type="submit" class="submit" (click)="update_agriculteur()">
+          Modifier
+         </button>
+   
+         
+      </form>
+   
+      
+      </div>
+  </div>
+</div>
+<section class="widget">
+  <div class="tomorrow"
+     data-location-id=""
+     data-language="FR"
+     data-unit-system="METRIC"
+     data-skin="light"
+     data-widget-type="aqiPollen"
+     style="padding-bottom:22px;position:relative;"
+  >
+   
+  </div>
+  <div class="tomorrow"
+  data-location-id=""
+  data-language="FR"
+  data-unit-system="METRIC"
+  data-skin="light"
+  data-widget-type="aqiPollutant"
+  style="padding-bottom:22px;position:relative;"
+>
+ <a
+   href="https://www.tomorrow.io/weather-api/"
+   rel="nofollow noopener noreferrer"
+   target="_blank"
+   style="position: absolute; bottom: 0; transform: translateX(-50%); left: 50%;"
+ >
+   <img
+     alt="Powered by the Tomorrow.io Weather API"
+     src="https://weather-website-client.tomorrow.io/img/powered-by.svg"
+     width="250"
+     height="18"
+   />
+ </a>
+</div>
+</section>
+
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6783605.8811835!2d4.27019776108318!3d33.88173204169109!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x125595448316a4e1%3A0x3a84333aaa019bef!2sTunisie!5e0!3m2!1sfr!2stn!4v1718364244390!5m2!1sfr!2stn" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+
+<footer>
+    <p>All rights are reserved 2024</p>
+   
+</footer>
+
+
+  
+
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasExampleLabel">Agriculteur</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        
+    <form class="form">
+        <div class="input-container">
+           <input type="text" class="form-control" placeholder="Nom" name="nom" [(ngModel)]="agriculteur_add.nom">
+        </div>
+        <div class="input-container">
+            <input type="text" class="form-control" placeholder="Prenom"  name="prenom" [(ngModel)]="agriculteur_add.prenom">
+        </div>
+       
+        <div class="input-container">
+            <input type="text" class="form-control" placeholder="Region"  name="region" [(ngModel)]="agriculteur_add.region">
+        </div>
+        <div class="input-container">
+            <label for="superficie" class="form-label">Superficie</label>
+            <input type="text" class="form-control" placeholder="Superficie"  name="superficie" [(ngModel)]="agriculteur_add.superficie">
+        </div>
+        <div class="input-container">
+            <label for="nb_zone" class="form-label">Nombre de zones</label>
+            <input type="number" class="form-control" placeholder="Nombre de zones"  name="nb_zone" [(ngModel)]="agriculteur_add.nb_zone">
+        </div>
+        <div class="input-container">
+            <input type="text" class="form-control" placeholder="Numero"  name="numero" [(ngModel)]="agriculteur_add.numero">
+        </div>
+        <div class="input-container">
+            <input type="text" class="form-control" placeholder="Code"  name="code" [(ngModel)]="agriculteur_add.code">
+        </div>
+         
+      
+          <button type="submit" class="submit" (click)="ajouter_agriculteur()">
+        Ajouter
+       </button>
+       <button type="submit" class="submit" (click)="vider()">
+        Vider les champs
+       </button>
+ 
+       
+    </form>
+ 
+    
+    </div>
+  </div>
+
+  <div class="dialog-box bg-white" id="dialog">
+    <h2>Information 💁🏻</h2>
+    <p>{{message}}</p>
+    <button aria-label="close" class="x" (click)="close_dialog()">❌</button>
+  </div>
+  
+
+  
+
+  <div class="dialog-box spinner" *ngIf="isLoading">
+    <div class="spinner-grow text-success" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <div class="spinner-grow text-secondary-color" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <div class="spinner-grow text-dark-color" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+  
+</body>

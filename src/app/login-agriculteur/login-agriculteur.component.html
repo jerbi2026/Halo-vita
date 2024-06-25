@@ -1,0 +1,38 @@
+<body>
+    
+    <div class="form-container">
+        <p class="title"><img src="assets/logo.jpg" alt="" height="80" width="80"></p>
+        
+        <form class="form" >
+          <input type="email" class="input form-control" placeholder="رقم" name="numero" [(ngModel)]="numero">
+          <input type="password" class="input form-control" placeholder="الرقم السري"  name="password" [(ngModel)]="code">
+          <p class="page-link">
+           <a routerLink="/forget_account"><span class="page-link-label">هل نسيت الحساب؟</span></a> 
+          </p>
+          <button class="form-btn" (click)="connect()" >تسجيل الدخول</button>
+          <button class="form-btn" routerLink="/mode" >عُد</button>
+        </form>
+       
+       
+      </div>
+</body>
+
+<div class="dialog-box bg-white" id="dialog">
+  <h2>معلومة 💁🏻</h2>
+  <p>{{message}}</p>
+  <button aria-label="close" class="x" (click)="close_dialog()">❌</button>
+</div>
+
+
+
+<div class="dialog-box spinner" *ngIf="isLoading">
+  <div class="spinner-grow text-warning-color" style="width: 3rem; height: 3rem;" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+  <div class="spinner-grow text-secondary-color" style="width: 3rem; height: 3rem;" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+  <div class="spinner-grow text-dark-color" style="width: 3rem; height: 3rem;" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
